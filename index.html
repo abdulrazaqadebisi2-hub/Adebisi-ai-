@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adebisi AI Pro - Ask Me Anything</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Google Sans','Inter',sans-serif; }
+body {
+  background: #0b0d12;
+  background-image: radial-gradient(800px 400px at 10% 0%, rgba(138,43,226,0.25), transparent), radial-gradient(800px 400px at 90% 10%, rgba(0,150,255,0.22), transparent), radial-gradient(600px 400px at 50% 100%, rgba(255,0,150,0.12), transparent);
+  color: white; min-height:100vh; display:flex; flex-direction:column;
+}
+/* HEADER - GEMINI STYLE */
+header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.08);
+  position:sticky; top:0; z-index:10;
+}
+.logo { display:flex; align-items:center; gap:10px; }
+.logo-icon {
+  width:42px; height:42px; border-radius:50%;
+  background: conic-gradient(from 0deg, #4285f4, #9b72cb, #d96570, #4285f4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; box-shadow:0 0 20px rgba(155,114,203,0.6);
+}
+.logo b { font-size:19px; letter-spacing:-0.2px; }
+.logo span { font-size:11px; color:#a8b0c0; display:block; font-weight:400; }
+.gemini-badge {
+  background: linear-gradient(90deg,#4285f4,#9b72cb,#d96570);
+  padding:6px 12px; border-radius:20px; font-size:12px; font-weight:600;
+}
+.main { flex:1; max-width:820px; width:100%; margin:0 auto; padding:18px 14px 120px; display:flex; flex-direction:column; }
+
+/* HERO */
+.hero { text-align:center; padding:28px 10px 10px; }
+.adeola-wrap { position:relative; width:108px; height:108px; margin:0 auto 14px; }
+.adeola-wrap::before {
+  content:""; position:absolute; inset:-6px; border-radius:50%;
+  background: conic-gradient(#4285f4,#9b72cb,#d96570,#4285f4);
+  animation: spin 4s linear infinite; z-index:0;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+.adeola-wrap img { width:108px; height:108px; border-radius:50%; object-fit:cover; position:relative; z-index:1; border:3px solid #0b0d12; }
+.hero h1 {
+  font-size:38px; line-height:1.1; font-weight:700;
+  background: linear-gradient(90deg,#4285f4,#9b72cb,#d96570,#4285f4);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-size:200% auto; animation: shine 4s linear infinite;
+}
+@keyframes shine { to { background-position:200% center; } }
+.hero p { color:#a8b0c0; margin-top:10px; font-size:15px; line-height:1.5; }
+.hero p b { color:white; }
+
+/* SUGGESTIONS - GEMINI CHIPS */
+.chips { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:18px 0; }
+.chip {
+  background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12);
+  padding:9px 14px; border-radius:20px; font-size:13px; cursor:pointer;
+}
+.chip:hover { background: rgba(255,255,255,0.16); }
+
+/* CHAT */
+#chat { display:flex; flex-direction:column; gap:14px; margin-top:10px; }
+.msg { max-width:85%; padding:13px 16px; border-radius:20px; font-size:15px; line-height:1.6; white-space:pre-wrap; }
+.user { align-self:flex-end; background: linear-gradient(135deg,#4285f4,#7b5cff); border-bottom-right-radius:6px; }
+.ai {
+  align-self:flex-start; background: rgba(255,255,255,0.09);
+  border:1px solid rgba(255,255,255,0.10); border-bottom-left-radius:6px;
+  backdrop-filter: blur(10px);
+}
+.ai b { color:#c9b8ff; }
+.ai-header { display:flex; align-items:center; gap:6px; font-size:12px; color:#a8b0c0; margin-bottom:6px; }
+.typing { color:#a8b0c0; font-style:italic; }
+
+/* INPUT - GEMINI BOTTOM BAR */
+.input-area {
+  position:fixed; bottom:0; left:0; right:0;
+  padding:12px; background: linear-gradient(transparent, rgba(11,13,18,0.95) 30%);
+}
+.input-box {
+  max-width:820px; margin:0 auto; display:flex; align-items:center; gap:8px;
+  background: #1a1d26; border:1px solid rgba(255,255,255,0.14);
+  border-radius:30px; padding:6px 6px 6px 16px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+}
+.input-box input { flex:1; background:transparent; border:none; outline:none; color:white; font-size:15px; padding:10px 0; }
+.input-box input::placeholder { color:#7a8296; }
+.icon-btn {
+  width:42px; height:42px; border-radius:50%; border:none; cursor:pointer;
+  background: rgba(255,255,255,0.10); color:white; font-size:18px; display:flex; align-items:center; justify-content:center;
+}
+.send-btn {
+  width:46px; height:46px; border-radius:50%; border:none; cursor:pointer; font-size:20px; color:white;
+  background: linear-gradient(135deg,#4285f4,#9b72cb,#d96570);
+  box-shadow:0 4px 15px rgba(155,114,203,0.5);
+}
+.footer { text-align:center; font-size:11px; color:#6b7280; margin-top:8px; }
+.footer b { color:#a8b0c0; }
+@media(max-width:600px){ .hero h1{font-size:32px} .msg{max-width:92%} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    <div><b>Adebisi AI Pro</b><span>By Abdulrazaq Adebisi • Offa, Kwara</span></div>
+  </div>
+  <div class="gemini-badge">✦ Gemini Style</div>
+</header>
+
+<div class="main">
+  <div class="hero" id="hero">
+    <div class="adeola-wrap">
+      <img src="adeola.jpg" alt="Adeola">
+    </div>
+    <h1>Meet Adebisi AI<br>Your Smart Assistant</h1>
+    <p><b>Ask me anything.</b> I can write, code, explain, translate,<br>build websites, games & AI characters for you.</p>
+    <div class="chips">
+      <div class="chip" onclick="quickAsk(this)">✦ Write a business plan</div>
+      <div class="chip" onclick="quickAsk(this)">💻 Build a website</div>
+      <div class="chip" onclick="quickAsk(this)">🎮 Create game character</div>
+      <div class="chip" onclick="quickAsk(this)">📚 Explain C++</div>
+    </div>
+  </div>
+
+  <div id="chat"></div>
+</div>
+
+<div class="input-area">
+  <div class="input-box">
+    <button class="icon-btn" onclick="newChat()" title="New Chat">＋</button>
+    <input id="input" placeholder="Ask Adebisi AI..." onkeypress="if(event.key==='Enter') sendMsg()">
+    <button class="icon-btn" onclick="startMic()" title="Voice">🎤</button>
+    <button class="send-btn" onclick="sendMsg()">➤</button>
+  </div>
+  <div class="footer">Built by <b>Abdulrazaq Adebisi</b> • Adegram Studio • Offa, Kwara State, Nigeria • <b>adebisi-ai-pro</b></div>
+</div>
+
+<script>
+const chatEl = document.getElementById('chat');
+const inputEl = document.getElementById('input');
+
+function quickAsk(el){
+  inputEl.value = el.innerText.replace('✦ ','').replace('💻 ','').replace('🎮 ','').replace('📚 ','');
+  sendMsg();
+}
+function newChat(){
+  chatEl.innerHTML = '';
+  document.getElementById('hero').style.display = 'block';
+  inputEl.value = '';
+  inputEl.focus();
+}
+function addMsg(text, who){
+  document.getElementById('hero').style.display = 'none';
+  const div = document.createElement('div');
+  div.className = 'msg ' + who;
+  if(who === 'ai'){
+    div.innerHTML = `<div class="ai-header">✦ Adebisi AI Pro</div>${text}`;
+  } else {
+    div.textContent = text;
+  }
+  chatEl.appendChild(div);
+  window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});
+  return div;
+}
+async function sendMsg(){
+  const q = inputEl.value.trim();
+  if(!q) return;
+  addMsg(q, 'user');
+  inputEl.value = '';
+  const loading = addMsg('Thinking... ✦', 'ai');
+  loading.classList.add('typing');
+
+  try {
+    // Connect to your Render server.js - same as before
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ message: q })
+    });
+    const data = await res.json();
+    loading.classList.remove('typing');
+    loading.innerHTML = `<div class="ai-header">✦ Adebisi AI Pro</div>${data.reply || data.answer || 'Sorry, try again.'}`;
+    speakText(data.reply || data.answer || '');
+  } catch(e){
+    loading.innerHTML = `<div class="ai-header">✦ Adebisi AI Pro</div>Network error. Check your connection and try again. I am still here for you from Offa!`;
+  }
+}
+function speakText(text){
+  if(!text) return;
+  const u = new SpeechSynthesisUtterance(text.slice(0,500));
+  u.rate = 1; u.pitch = 1;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+function startMic(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ alert('Mic not supported on this browser. Use Chrome.'); return; }
+  const rec = new SR();
+  rec.lang = 'en-NG';
+  rec.onresult = e => { inputEl.value = e.results[0][0].transcript; sendMsg(); };
+  rec.start();
+  inputEl.placeholder = 'Listening... Speak now...';
+  rec.onend = () => { inputEl.placeholder = 'Ask Adebisi AI...'; };
+}
+</script>
+</body>
+</html>
